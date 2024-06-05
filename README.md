@@ -3,6 +3,8 @@
 ## Introduction
 Welcome to Horse Racing, a simple Pygame-based game where you control a horse rider through a scrolling environment. In this game, you'll experience the thrill of horse racing as you navigate your way through the track.
 
+![Screenshot](./images/screenshot.png)
+
 ## Gameplay
 - Use the RIGHT arrow key to speed up the horse rider.
 - Use the LEFT arrow key to slow down the horse rider.
