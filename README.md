@@ -35,5 +35,6 @@ Welcome to Horse Racing, a simple Pygame-based game where you control a horse ri
 - The horse rider image is from [https://admurin.itch.io/pixel-character-horse-rider](https://admurin.itch.io/pixel-character-horse-rider)
 - The background image is from [https://ansimuz.itch.io/magic-cliffs-environment](https://ansimuz.itch.io/magic-cliffs-environment)
 - The testing images are found from [https://lostgarden.com/2005/03/30/download-a-complete-set-of-sweet-8-bit-sinistar-clone-graphics/](https://lostgarden.com/2005/03/30/download-a-complete-set-of-sweet-8-bit-sinistar-clone-graphics/)
+- The background music is from [https://ansimuz.itch.io/adventure-music-collection-pack-1](https://ansimuz.itch.io/adventure-music-collection-pack-1)
 
 Enjoy the game! Feel free to share your feedback and suggestions.
