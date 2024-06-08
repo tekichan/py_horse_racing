@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from pygame import mixer
 from sprite_strip_anim import SpriteStripAnim
 
 # Define unchanged variables
@@ -13,6 +14,8 @@ TICK_FRAMES = 4
 HORSE_RIDER_SS_PATH = FOLDER_PREFIX + 'horse_rider_spritesheet.png'
 BACKGROUND_PATH = FOLDER_PREFIX + 'bg_environment.png'
 HORSE_RIDER_SCALE = (130, 130)  # Scaling width and height of the rider image
+MEDIA_PREFIX = 'media/'
+MAX_SCROLL_SPEED = 10
 
 # initializes the pygame engine	
 print('The game ' + GAME_TITLE + ' is starting...')
@@ -36,16 +39,21 @@ background_x = 0
 scroll_speed = 0
 
 # Initiate spritesheet animations
-rider_start_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,0,65,65), 7, -1, True, TICK_FRAMES, HORSE_RIDER_SCALE)
-rider_run_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (195,65,65,65), 3, -1, True, TICK_FRAMES, HORSE_RIDER_SCALE) + \
-                    SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,130,65,65), 3, -1, True, TICK_FRAMES, HORSE_RIDER_SCALE)
-rider_slow_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,195,65,65), 7, -1, False, TICK_FRAMES, HORSE_RIDER_SCALE)
-rider_stop_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,195,65,65), 1, -1, True, TICK_FRAMES, HORSE_RIDER_SCALE)
+rider_start_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,0,64,64), 7, -1, True, TICK_FRAMES, HORSE_RIDER_SCALE)
+rider_run_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (195,65,64,64), 3, -1, True, TICK_FRAMES, HORSE_RIDER_SCALE) + \
+                    SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,130,64,64), 3, -1, True, TICK_FRAMES, HORSE_RIDER_SCALE)
+rider_slow_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,195,64,64), 7, -1, False, TICK_FRAMES, HORSE_RIDER_SCALE)
+rider_stop_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,195,64,64), 1, -1, True, TICK_FRAMES, HORSE_RIDER_SCALE)
 
 # Variable for rider animations
 horse_rider_anim = rider_stop_anim
 horse_rider_x = 280
 horse_rider_y = 200
+
+# Background music
+mixer.init()
+mixer.music.load(MEDIA_PREFIX  + 'dark-happy-world.ogg')
+mixer.music.play()
 
 # Game loop begins
 # where all the game events occur, update and get drawn to the screen
@@ -62,11 +70,11 @@ while running:
             # RIGHT arrow to run
             if event.key == pygame.K_RIGHT:
                 horse_rider_anim = rider_run_anim
-                scroll_speed = 2
+                scroll_speed = scroll_speed + 2 if scroll_speed < MAX_SCROLL_SPEED else MAX_SCROLL_SPEED
             # LEFT arrow to slow down
             if event.key == pygame.K_LEFT:
                 horse_rider_anim = rider_slow_anim
-                scroll_speed = 1
+                scroll_speed = scroll_speed - 1 if scroll_speed > 1 else 1
             # ESC key to quit
             if event.key == K_ESCAPE:
                 print('The game ' + GAME_TITLE + ' is ending...')
@@ -90,8 +98,13 @@ while running:
     except StopIteration:
         # when rider animation stop, show its stop image
         rider_slow_anim.iter()
-        horse_rider_anim = rider_stop_anim
-        scroll_speed = 0
+        if scroll_speed == 1:
+            horse_rider_anim = rider_stop_anim
+            scroll_speed = 0
+        else:
+            horse_rider_anim = rider_run_anim
+            scroll_speed = scroll_speed - 1
+
     DISPLAYSURF.blit(horse_rider_image, (horse_rider_x, horse_rider_y))
 
     # Update the display and clock tick
