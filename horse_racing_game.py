@@ -7,6 +7,8 @@ from sprite_strip_anim import SpriteStripAnim
 FPS = 30
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
+MIDDLE_X = 280
+GROUND_Y = 200
 BLACK = Color('black')
 GAME_TITLE = 'Horse Racing'
 FOLDER_PREFIX = 'images/'
@@ -16,6 +18,7 @@ BACKGROUND_PATH = FOLDER_PREFIX + 'bg_environment.png'
 HORSE_RIDER_SCALE = (130, 130)  # Scaling width and height of the rider image
 MEDIA_PREFIX = 'media/'
 MAX_SCROLL_SPEED = 10
+GRAVITY = 5
 
 # initializes the pygame engine	
 print('The game ' + GAME_TITLE + ' is starting...')
@@ -47,13 +50,21 @@ rider_stop_anim = SpriteStripAnim(HORSE_RIDER_SS_PATH, (0,195,64,64), 1, -1, Tru
 
 # Variable for rider animations
 horse_rider_anim = rider_stop_anim
-horse_rider_x = 280
-horse_rider_y = 200
+horse_rider_x = MIDDLE_X
+horse_rider_y = GROUND_Y
+rider_y_speed = 0
 
 # Background music
 mixer.init()
 mixer.music.load(MEDIA_PREFIX  + 'dark-happy-world.ogg')
-mixer.music.play()
+mixer.music.play(loops=-1)
+
+# Text Font
+pygame.font.init()
+my_font = pygame.font.SysFont('Comic Sans MS', 30)
+
+# Distance
+remain_distance = 3000
 
 # Game loop begins
 # where all the game events occur, update and get drawn to the screen
@@ -75,15 +86,31 @@ while running:
             if event.key == pygame.K_LEFT:
                 horse_rider_anim = rider_slow_anim
                 scroll_speed = scroll_speed - 1 if scroll_speed > 1 else 1
+            # UP arrow to jump
+            if event.key == pygame.K_UP and horse_rider_y == GROUND_Y:
+                rider_y_speed = 30 
             # ESC key to quit
             if event.key == K_ESCAPE:
                 print('The game ' + GAME_TITLE + ' is ending...')
                 running = False
     
+    # Check if the horse jump or fall
+    if rider_y_speed != 0 or horse_rider_y < GROUND_Y:
+        horse_rider_y = horse_rider_y - rider_y_speed if horse_rider_y - rider_y_speed < GROUND_Y else GROUND_Y
+        rider_y_speed = rider_y_speed - GRAVITY if horse_rider_y < GROUND_Y else 0
+
     # Scroll the background
     background_x -= scroll_speed
     if background_x <= -background_image.get_width():
         background_x = 0
+
+    # Distance text
+    if remain_distance > 0:
+        remain_distance = remain_distance - scroll_speed
+        distance_message = f'Distance: {remain_distance//10} m left'
+    else:
+        distance_message = 'GOAL~ Congrats!!!'
+    text_surface = my_font.render(distance_message, False, (0, 0, 0))
 
     # Redraw screen
     DISPLAYSURF.fill(BLACK)
@@ -106,6 +133,8 @@ while running:
             scroll_speed = scroll_speed - 1
 
     DISPLAYSURF.blit(horse_rider_image, (horse_rider_x, horse_rider_y))
+
+    DISPLAYSURF.blit(text_surface, (200,0))
 
     # Update the display and clock tick
     pygame.display.update()
