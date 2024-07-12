@@ -5,17 +5,22 @@ Welcome to Horse Racing, a simple Pygame-based game where you control a horse ri
 
 ![Screenshot](./images/screenshot.png)
 
-## Gameplay
-- Use the RIGHT arrow key to speed up the horse rider.
-- Use the LEFT arrow key to slow down the horse rider.
-- Press the ESC key to exit the game.
+## PyGame Tutorial
 
-## Programming Logic
-- **Initialization**: The game initializes Pygame and sets up the display window with a specified width and height.
-- **Sprites and Animations**: The game loads sprite sheets for the horse rider's animations such as starting, running, slowing down, and stopping. These animations are created using the `SpriteStripAnim` class.
-- **Background Scrolling**: The game features a scrolling background to simulate movement. The background image is redrawn continuously as the player progresses through the game.
-- **Event Handling**: The game captures keyboard events to control the horse rider's speed and to exit the game when the ESC key is pressed.
-- **Game Loop**: The main game loop continuously updates the game state, including the position of the horse rider, the scrolling background, and the animation frames. It also handles events and updates the display at a specified frame rate.
+In addition, this game serves as a tutorial for learning Pygame and game development principles. This tutorial is divided into 7 lessons:
+- [Lesson 1: Start Game Development with PyGame](./LESSON_1.md)
+- [Lesson 2: Scroll the background](./LESSON_2.md)
+- [Lesson 3: Add the Hero](./LESSON_3.md)
+- [Lesson 4: Add Animations and Control](./LESSON_4.md)
+- [Lesson 5: Add an Enemy](./LESSON_5.md)
+- [Lesson 6: Implement Collision Detection](./LESSON_6.md)
+- [Lesson 7: Display Text Components](./LESSON_7.md)
+
+## Gameplay
+- **RIGHT Arrow Key:** Increase speed and run faster.
+- **LEFT Arrow Key:** Slow down the horse.
+- **UP Arrow Key:** Jump to avoid coming foxes which slow you down.
+- **ESC Key:** Quit the game.
 
 ## Requirements
 - Python 3.12

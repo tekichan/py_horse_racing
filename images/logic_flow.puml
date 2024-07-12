@@ -1,0 +1,47 @@
+@startuml
+start
+
+:Initialize Pygame and load assets;
+
+repeat
+    :Handle events;
+    if (Event is QUIT) then (yes)
+        stop
+    endif
+
+    if (Event is KEYDOWN) then (yes)
+        :Handle key events;
+        if (Key is RIGHT arrow) then (yes)
+            :Increase speed;
+        else (no)
+            if (Key is LEFT arrow) then (yes)
+                :Slow down;
+            else (no)
+                if (Key is UP arrow) then (yes)
+                    :Jump;
+                else (no)
+                    if (Key is ESC) then (yes)
+                        stop
+                    endif
+                endif
+            endif
+        endif
+    endif
+
+    :Update game state;
+    if (Collision with fox?) then (yes)
+        :Slow down rider;
+    endif
+
+    :Draw game scene;
+    :Update display;
+
+    if (Goal reached?) then (yes)
+        :Display congratulatory message;
+        stop
+    endif
+
+repeat while (running)
+
+stop
+@enduml
