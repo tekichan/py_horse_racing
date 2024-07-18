@@ -25,10 +25,6 @@ Avoid hitting foxes, as they will slow you down.
 4. **Collision Detection:** Check for collisions between the rider and foxes.
 5. **Game Loop:** Main loop to handle events, update game state, and redraw the screen.
 
-### Logic Flow
-
-![Logic Flow](./images/logic_flow.png)
-
 ## Tutorial Structure
 
 This tutorial is divided into 7 sessions. We can build it piece by piece, step by step.
